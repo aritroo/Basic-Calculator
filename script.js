@@ -1,18 +1,28 @@
 document.addEventListener("DOMContentLoaded", function () {
+  // Select the display element
   const display = document.querySelector(".display");
+
+  // Select all buttons
   const buttons = document.querySelectorAll(".buttons button");
   var ans = 0;
+
+  // function for clear the display
 
   function clearDisplay() {
     display.value = "";
   }
 
+  // Function to handle button clicks
   function buttonClick(value) {
     if (value == "AC") {
       clearDisplay();
-    } else if (value == "Del") {
+    }
+    // Delete the last character if Del button is clicked
+    else if (value == "Del") {
       display.value = display.value.slice(0, -1);
-    } else if (value == "=") {
+    }
+    // Evaluate the expression if = button is clicked
+    else if (value == "=") {
       try {
         var result = eval(display.value);
         if (typeof result == "number") {
@@ -30,6 +40,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   }
 
+  // Add click event listener to all buttons
   buttons.forEach((button) => {
     button.addEventListener("click", () => {
       buttonClick(button.textContent);
