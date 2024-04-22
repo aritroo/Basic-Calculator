@@ -24,10 +24,16 @@ document.addEventListener("DOMContentLoaded", function () {
     // Evaluate the expression if = button is clicked
     else if (value == "=") {
       try {
+        // Check for division by zero
+        if (display.value.includes("/0")) {
+          throw new Error("Error");
+        }
+
         var result = eval(display.value);
         if (typeof result == "number") {
           result = result.toFixed(2);
         }
+
         display.value = result;
         ans = result;
       } catch (e) {
