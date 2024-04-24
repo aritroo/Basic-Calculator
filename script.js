@@ -23,26 +23,30 @@ document.addEventListener("DOMContentLoaded", function () {
     }
     // Evaluate the expression if = button is clicked
     else if (value == "=") {
-      try {
-        // Check for division by zero
-        if (display.value.includes("/0")) {
-          throw new Error("Error");
-        }
-
-        var result = eval(display.value);
-        if (typeof result == "number") {
-          result = result.toFixed(2);
-        }
-
-        display.value = result;
-        ans = result;
-      } catch (e) {
-        display.value = "Error";
-      }
+      evaluateExpression();
     } else if (value == "Ans") {
       display.value += ans;
     } else {
       display.value += value;
+    }
+  }
+
+  function evaluateExpression() {
+    try {
+      // Check for division by zero
+      if (display.value.includes("/0")) {
+        throw new Error("Error");
+      }
+
+      var result = eval(display.value);
+      if (typeof result == "number") {
+        result = result.toFixed(2);
+      }
+
+      display.value = result;
+      ans = result;
+    } catch (e) {
+      display.value = "Error";
     }
   }
 
@@ -51,5 +55,29 @@ document.addEventListener("DOMContentLoaded", function () {
     button.addEventListener("click", () => {
       buttonClick(button.textContent);
     });
+  });
+
+  document.addEventListener("keydown", (event) => {
+    const key = event.key;
+
+    if (
+      (key >= "0" && key <= "9") ||
+      key === "+" ||
+      key === "-" ||
+      key === "*" ||
+      key === "/" ||
+      key === "%" ||
+      key === "." ||
+      key === "=" ||
+      key === "Enter"
+    ) {
+      event.preventDefault();
+
+      if (key === "=" || key === "Enter") {
+        evaluateExpression();
+      } else {
+        buttonClick(key);
+      }
+    }
   });
 });
